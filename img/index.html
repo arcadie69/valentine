@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Valentine</title>
+</head>
+<body>
+    <main class="container">
+        <img class="cat-img" src="img/cat-0.jpg" alt="Picture of a cat" />
+        <p class="title">Will you be my Valentine?</p>
+        <div class="buttons">
+            <button type="button" class="btn btn--yes">Yes</button>
+            <button type="button" class="btn btn--no" onclick="showVisitorInfo()">No</button>
+        </div>
+        <div id="visitor-info" style="display:none;">
+            <p>Your IP address is: <span id="ip"></span></p>
+            <p>Your device type is: <span id="device"></span></p>
+            <p>Your browser is: <span id="browser"></span></p>
+        </div>
+    </main>
+
+    <script>
+        function showVisitorInfo() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://api.ipify.org?format=json', true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const ip = JSON.parse(xhr.responseText).ip;
+                    document.getElementById('ip').textContent = ip;
+                    document.getElementById('device').textContent = navigator.userAgent;
+                    document.getElementById('browser').textContent = navigator.appName;
+                    document.getElementById('visitor-info').style.display = 'block';
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
